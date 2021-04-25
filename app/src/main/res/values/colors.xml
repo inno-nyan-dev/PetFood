@@ -12,10 +12,13 @@
 
     <color name="gray_200">#FFDDDDDD</color>
 
+    <color name="red_400">#FFF51B08</color>
     <color name="red_500">#FFBB2222</color>
 
+    <color name="yellow_400">#FFF5D62F</color>
     <color name="yellow_500">#FFBBBB22</color>
 
+    <color name="green_300">#FF2FF587</color>
     <color name="green_500">#FF22BB22</color>
 
     <color name="blue_500">#FF3333DD</color>

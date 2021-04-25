@@ -47,6 +47,14 @@ class FoodViewHolder(
 
         binding.foodName.text = item.name
         binding.dangerLevel.text = item.dangerLevel.levelString
+        binding.dangerLevel.setTextColor(
+            ResourcesCompat.getColor(
+                binding.getResources(),
+                item.dangerLevel.textColorRes,
+                null
+            )
+        )
+
         val color =
             ResourcesCompat.getColor(binding.getResources(), item.dangerLevel.colorRes, null)
         binding.dangerLevel.backgroundTintList = ColorStateList.valueOf(color)
