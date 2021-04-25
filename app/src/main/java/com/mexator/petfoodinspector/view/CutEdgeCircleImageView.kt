@@ -1,15 +1,56 @@
 package com.mexator.petfoodinspector.view
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
+import com.mexator.petfoodinspector.R
 
 
 class CutEdgeCircleImageView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : androidx.appcompat.widget.AppCompatImageView(context, attrs, defStyleAttr) {
+    attributeSet: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0,
+) : androidx.appcompat.widget.AppCompatImageView(context, attributeSet, defStyleAttr) {
+
+    companion object {
+        private const val DEFAULT_CUT_SIZE = 0.9F
+        private const val DEFAULT_CUT_OFFSET = 0F
+    }
+
+    /**
+     * Cut size scale factor
+     */
+    private val cutSize: Float
+
+    /**
+     * Cut offset in view
+     */
+    private val cutOffset: Float
+
+    init {
+        // Apply attributes
+        val attrs: TypedArray = context.obtainStyledAttributes(
+            attributeSet,
+            R.styleable.CutEdgeCircleImageView,
+            defStyleAttr,
+            defStyleRes
+        )
+
+        val smallRadius =
+            attrs.getFloat(
+                R.styleable.CutEdgeCircleImageView_cutSize,
+                DEFAULT_CUT_SIZE
+            )
+        cutSize = smallRadius
+
+        cutOffset = attrs.getDimension(
+            R.styleable.CutEdgeCircleImageView_cutOffset,
+            DEFAULT_CUT_OFFSET
+        )
+        attrs.recycle()
+    }
 
     private val paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.RED
@@ -34,12 +75,12 @@ class CutEdgeCircleImageView @JvmOverloads constructor(
             Path.Direction.CCW
         )
 
-        val smallR: Float = bigR * 0.85F
+        val smallR: Float = bigR * cutSize
 
         val cutPath = Path()
         cutPath.addCircle(
-            centerX - bigR,
-            centerY - bigR,
+            centerX - bigR - cutOffset,
+            centerY - bigR - cutOffset,
             smallR,
             Path.Direction.CCW
         )

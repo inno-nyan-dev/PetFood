@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="16dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -17,8 +17,22 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:scaleType="centerCrop"
+            app:cutOffset="-12dp"
+            app:cutSize="0.7"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
             tools:src="@tools:sample/avatars" />
+
+        <CheckBox
+            android:backgroundTint="@color/like_tint_selector"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:button="@null"
+            android:background="@drawable/like_selector"
+            app:layout_constraintStart_toStartOf="@+id/foodPicture"
+            app:layout_constraintTop_toTopOf="@+id/foodPicture" />
 
         <TextView
             android:id="@+id/foodName"
@@ -29,6 +43,10 @@
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/black"
             android:textSize="24sp"
+
+            app:layout_constraintEnd_toStartOf="@+id/dangerLevel"
+            app:layout_constraintStart_toEndOf="@id/foodPicture"
+            app:layout_constraintTop_toTopOf="parent"
 
             tools:text="Cinnamon pancakes" />
 
@@ -44,7 +62,10 @@
             android:textColor="@color/white"
             android:textSize="14sp"
 
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
             tools:text="Forbidden" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
