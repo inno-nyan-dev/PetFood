@@ -12,12 +12,11 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
+        <com.mexator.petfoodinspector.view.CutEdgeCircleImageView
             android:id="@+id/foodPicture"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:scaleType="centerCrop"
-            app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
 
             tools:src="@tools:sample/avatars" />
 
