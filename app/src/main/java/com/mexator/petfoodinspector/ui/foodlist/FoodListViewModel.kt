@@ -15,14 +15,27 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
+sealed class FoodListOrError {
+    class FoodList(val list: List<FoodItem>) : FoodListOrError()
+    class Error(val error: Throwable) : FoodListOrError()
+}
+
 class FoodListViewModel : ViewModel() {
+    /**
+     * State of food list screen.
+     *
+     * There should not be an error and content on screen simultaneously, i.e.
+     * if [error] is not null, then [displayedItems] should be null and vice versa
+     */
     data class FoodListViewState(
         val progress: Boolean = false,
-        val displayedItems: List<FoodUI> = listOf(),
+        val error: String? = null,
+        val displayedItems: List<FoodUI>? = listOf(),
     )
 
+
     private val searchQueries: BehaviorSubject<String> = BehaviorSubject.create()
-    private val foodListObservable: PublishSubject<List<FoodItem>> = PublishSubject.create()
+    private var foodListObservable: PublishSubject<FoodListOrError> = PublishSubject.create()
     private val progressObservable: PublishSubject<Boolean> = PublishSubject.create()
 
     val viewState: Observable<FoodListViewState> =
@@ -30,12 +43,23 @@ class FoodListViewModel : ViewModel() {
             searchQueries,
             foodListObservable,
             progressObservable,
-            { query, foodList, progress ->
-                Log.d(TAG, query)
-                FoodListViewState(
-                    progress,
-                    foodList.filter { satisfiesQuery(it, query) }
-                        .map(this::mapItem))
+            { query, foodListOrError, progress ->
+                Log.d(TAG, "$query, $foodListOrError, $progress")
+                when (foodListOrError) {
+                    is FoodListOrError.FoodList ->
+                        FoodListViewState(
+                            progress,
+                            null,
+                            foodListOrError.list.filter { satisfiesQuery(it, query) }
+                                .map(this::mapItem)
+                        )
+                    is FoodListOrError.Error ->
+                        FoodListViewState(
+                            progress,
+                            foodListOrError.error.message ?: "Unknown error",
+                            null
+                        )
+                }
             }
         )
 
@@ -53,10 +77,13 @@ class FoodListViewModel : ViewModel() {
     fun loadInitialContent() {
         compositeDisposable += repository.getFoodList()
             .doOnSubscribe { progressObservable.onNext(true) }
-            .doOnSuccess { progressObservable.onNext(false) }
+            .doOnTerminate { progressObservable.onNext(false) }
             .subscribeBy(
-                onSuccess = { foodListObservable.onNext(it) },
-                onError = { foodListObservable.onError(it) }
+                onSuccess = { foodListObservable.onNext(FoodListOrError.FoodList(it)) },
+                onError = {
+                    Log.e(TAG, "error receiving foods", it)
+                    foodListObservable.onNext(FoodListOrError.Error(it))
+                }
             )
     }
 

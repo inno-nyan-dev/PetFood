@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.FragmentPageFoodlistBinding
 import com.mexator.petfoodinspector.ui.dpToPx
@@ -56,11 +57,12 @@ class FoodListPageFragment : Fragment() {
 
         compositeDisposable +=
             viewModel.viewState
+                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = this::applyViewState,
-                    onError = { throwable -> Log.d(TAG, "", throwable) }
+                    onError = { throwable -> Log.e(TAG, "", throwable) }
                 )
 
         viewModel.loadInitialContent()
@@ -71,10 +73,25 @@ class FoodListPageFragment : Fragment() {
         compositeDisposable.dispose()
     }
 
+    private val errorSnackBar: Snackbar by lazy {
+        Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE).apply {
+            setAction(R.string.action_retry) {
+                viewModel.loadInitialContent()
+                this.dismiss()
+            }
+        }
+    }
+
     private fun applyViewState(state: FoodListViewModel.FoodListViewState) {
         binding.foodRecycler.visibility = if (state.progress) View.INVISIBLE else View.VISIBLE
         binding.foodProgress.visibility = if (state.progress) View.VISIBLE else View.INVISIBLE
-        adapter.items = state.displayedItems
+        adapter.items = state.displayedItems ?: listOf()
+        if (state.error != null && !state.progress) {
+            errorSnackBar.setText(state.error)
+            errorSnackBar.show()
+        } else {
+            errorSnackBar.dismiss()
+        }
     }
 
     private fun onFoodClicked(food: FoodUI) {
