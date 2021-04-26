@@ -16,6 +16,8 @@ Application consist of 2 main parts: Android app itself and the server to store 
 
 - [Project backlog](https://github.com/orgs/inno-nyan-dev/projects/1)
 - [Project documentation CI/CD](https://inno-nyan-dev.github.io/PetFood/)
+- [Screen with products list](https://www.justinmind.com/usernote/tests/51948828/51952214/51952216/index.html#/screens/5e9a1d73-e5ba-4404-ac76-a6ec5c08827e)
+- [Detailed product description design](https://www.justinmind.com/usernote/tests/51948828/52111644/52111646/index.html#/screens/c4f394c1-7fb1-478b-a909-b745186b5eeb)
 
 ### Backend technology used
 
@@ -24,3 +26,10 @@ Application consist of 2 main parts: Android app itself and the server to store 
 - Docker
 
 Server arcitecture is MC (Model-Connector) based and written in Kotlin language.
+
+### Android application 
+
+- Kotlin 
+- Clean arcitecture 
+
+Arcitecture is MVVM ( Model View - View Model ).
