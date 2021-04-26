@@ -1,10 +1,10 @@
 package com.mexator.petfoodinspector.data.mock
 
-import com.mexator.petfoodinspector.data.DangerLevel
-import com.mexator.petfoodinspector.data.FoodID
-import com.mexator.petfoodinspector.data.FoodRepository
-import com.mexator.petfoodinspector.data.pojo.FoodDetail
-import com.mexator.petfoodinspector.data.pojo.FoodItem
+import com.mexator.petfoodinspector.domain.data.FoodDetail
+import com.mexator.petfoodinspector.domain.FoodID
+import com.mexator.petfoodinspector.domain.FoodRepository
+import com.mexator.petfoodinspector.domain.data.DangerLevel
+import com.mexator.petfoodinspector.domain.data.FoodItem
 import com.mexator.petfoodinspector.ui.data.FoodPicture
 import io.reactivex.rxjava3.core.Single
 import java.util.concurrent.TimeUnit
@@ -19,13 +19,13 @@ object MockRepository : FoodRepository {
         get() = field++
 
     private val foods = listOf<FoodItem>(
-        FoodItem(id, "Banana", DangerLevel.Treat, FoodPicture.RemoteFoodPicture(urls[0])),
-        FoodItem(id, "Nut", DangerLevel.Safe, FoodPicture.RemoteFoodPicture(urls[1])),
-        FoodItem(id, "Chocolate", DangerLevel.Danger, FoodPicture.RemoteFoodPicture(urls[2])),
+        FoodItem(id, "Banana", DangerLevel.WITH_CARE, FoodPicture.RemoteFoodPicture(urls[0])),
+        FoodItem(id, "Nut", DangerLevel.SAFE, FoodPicture.RemoteFoodPicture(urls[1])),
+        FoodItem(id, "Chocolate", DangerLevel.PROHIBITED, FoodPicture.RemoteFoodPicture(urls[2])),
         FoodItem(
             id,
             "Item with very, very, very, very, very, very, very, very, very, very, very long name",
-            DangerLevel.Danger,
+            DangerLevel.PROHIBITED,
             FoodPicture.RemoteFoodPicture(urls[2])
         ),
     )

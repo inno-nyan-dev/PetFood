@@ -2,12 +2,11 @@ package com.mexator.petfoodinspector.ui.foodlist.recycler
 
 import android.content.res.ColorStateList
 import androidx.core.content.res.ResourcesCompat
-import com.bumptech.glide.Glide
 import com.mexator.petfoodinspector.R
-import com.mexator.petfoodinspector.data.DangerLevel
 import com.mexator.petfoodinspector.databinding.ItemFoodBinding
 import com.mexator.petfoodinspector.ui.data.FoodPicture
 import com.mexator.petfoodinspector.ui.data.FoodPictureDrawableFactory
+import com.mexator.petfoodinspector.ui.data.UIDangerLevel
 import com.mexator.petfoodinspector.ui.getResources
 import com.mexator.petfoodinspector.ui.recycler.BaseViewHolder
 import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
@@ -19,7 +18,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 data class FoodUI(
     val name: String,
     val pictureData: FoodPicture,
-    val dangerLevel: DangerLevel,
+    val dangerLevel: UIDangerLevel,
     override val uid: Int,
     override val viewType: Int = R.layout.item_food
 ) : ViewTyped

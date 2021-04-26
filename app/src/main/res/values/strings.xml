@@ -1,7 +1,23 @@
 <resources>
     <string name="app_name">PetFoodInspector</string>
-    <string name="button_login">login</string>
 
     <string name="password_placeholder">Password: %1$s</string>
     <string name="login_placeholder">Login: %1$s</string>
+
+    <!--  Drawer labels  -->
+    <string name="header_text_no_user">Data not synchronised</string>
+    <string name="login_title">Login</string>
+    <string name="logout_title">Logout</string>
+    <string name="search_foods_dest">Search for foods</string>
+
+    <!--  Login screens labels  -->
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="button_login">Log in</string>
+    <string name="button_sign_up">Sign up</string>
+    <string name="sign_up">Don\'t have an account? Sign up!</string>
+
+    <!-- EditText hints  -->
+    <string name="enter_email_address">Enter email address</string>
+    <string name="enter_password">Enter password</string>
 </resources>

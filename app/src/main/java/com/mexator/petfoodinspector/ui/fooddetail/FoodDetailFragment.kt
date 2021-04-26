@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.mexator.petfoodinspector.databinding.FragmentFoodDetailBinding
+import com.mexator.petfoodinspector.domain.data.DangerLevel
 import com.mexator.petfoodinspector.ui.data.FoodPictureDrawableFactory
+import com.mexator.petfoodinspector.ui.data.UIDangerLevel
+import com.mexator.petfoodinspector.ui.data.toUIDangerLevel
 import com.mexator.petfoodinspector.ui.foodlist.FoodListPageFragment
 import com.mexator.petfoodinspector.ui.getResources
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -71,10 +74,11 @@ class FoodDetailFragment : Fragment() {
                     onSuccess = { binding.foodPicture.setImageDrawable(it) }
                 )
 
+            val uiDangerLevel = item.dangerLevel.toUIDangerLevel()
 
-            binding.dangerLevel.text = item.dangerLevel.levelString
+            binding.dangerLevel.text = uiDangerLevel.levelString
             val color =
-                ResourcesCompat.getColor(binding.getResources(), item.dangerLevel.colorRes, null)
+                ResourcesCompat.getColor(binding.getResources(), uiDangerLevel.colorRes, null)
             binding.dangerLevel.backgroundTintList = ColorStateList.valueOf(color)
         }
     }

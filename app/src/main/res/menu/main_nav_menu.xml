@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/loginGroup">
+        <item
+            android:id="@+id/authActivity"
+            android:icon="@drawable/ic_account_24"
+            android:title="@string/login_title" />
+    </group>
+    <group android:id="@+id/foodsSearch">
+        <item
+            android:id="@+id/foodSearchFragment"
+            android:icon="@drawable/ic_search_24"
+            android:title="@string/search_foods_dest" />
+    </group>
+</menu>

@@ -1,6 +1,5 @@
-package com.mexator.petfoodinspector.data.pojo
+package com.mexator.petfoodinspector.domain.data
 
-import com.mexator.petfoodinspector.data.DangerLevel
 import com.mexator.petfoodinspector.ui.data.FoodPicture
 
 data class FoodItem(

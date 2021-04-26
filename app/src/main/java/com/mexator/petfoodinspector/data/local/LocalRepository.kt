@@ -1,10 +1,10 @@
 package com.mexator.petfoodinspector.data.local
 
 import android.content.Context
-import com.mexator.petfoodinspector.data.FoodID
-import com.mexator.petfoodinspector.data.FoodRepository
-import com.mexator.petfoodinspector.data.pojo.FoodDetail
-import com.mexator.petfoodinspector.data.pojo.FoodItem
+import com.mexator.petfoodinspector.domain.data.FoodDetail
+import com.mexator.petfoodinspector.domain.FoodID
+import com.mexator.petfoodinspector.domain.FoodRepository
+import com.mexator.petfoodinspector.domain.data.FoodItem
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.serialization.decodeFromString

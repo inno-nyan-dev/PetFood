@@ -1,7 +1,7 @@
-package com.mexator.petfoodinspector.data
+package com.mexator.petfoodinspector.domain
 
-import com.mexator.petfoodinspector.data.pojo.FoodDetail
-import com.mexator.petfoodinspector.data.pojo.FoodItem
+import com.mexator.petfoodinspector.domain.data.FoodDetail
+import com.mexator.petfoodinspector.domain.data.FoodItem
 import io.reactivex.rxjava3.core.Single
 
 typealias FoodID = Int

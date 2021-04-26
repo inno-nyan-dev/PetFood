@@ -16,6 +16,10 @@ buildscript {
     ext.rxlinter_version = "1.7.7"
 
     ext.kotlinx_serialization_version="1.1.0"
+    ext.okhttp_version = "4.9.1"
+    ext.retrofit_version="2.9.0"
+    ext.retrofit_rx_calladapter_version="3.0.0"
+    ext.retrofit_serialization_converter_version="0.8.0"
 
     repositories {
         google()
