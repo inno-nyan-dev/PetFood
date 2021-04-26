@@ -18,8 +18,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
 
-        buildConfigField("String", "API_URL", "\"http://petfood.mexator.xyz:8080/api/v1/\"")
-        buildConfigField("String", "IMAGE_API_URL", "\"http://petfood.mexator.xyz:80/images/\"")
+        buildConfigField("String", "API_URL", "\"https://petfood.mexator.xyz:8443/api/v1/\"")
+        buildConfigField("String", "IMAGE_API_URL", "\"https://petfood.mexator.xyz/images/\"")
 
     }
 
