@@ -53,9 +53,31 @@ class FoodDetailFragment : Fragment() {
                 )
     }
 
+    private var favorite: Boolean = false
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.food_detail_actionbar, menu)
+        menu.getItem(0).setIcon(R.drawable.ic_star_border_24)
         super.onCreateOptionsMenu(menu, inflater)
+        // Todo change setting of this flag
+        favorite = false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_fav -> {
+                favorite = if (favorite) {
+                    item.setIcon(R.drawable.ic_star_border_24);
+                    false;
+                } else {
+                    item.setIcon(R.drawable.ic_star_filled_24);
+                    true;
+                }
+                // Todo process update here
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
