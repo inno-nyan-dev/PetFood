@@ -1,22 +1,26 @@
 # PetFood
 
-Petfood is a mobile app, that helps its users to properly feed their pets. For now planned functionality is to allow users easily determine which food is safe to a pet, and in which quantities.
+Pet food is a mobile application that helps its users to properly feed their pets. Current version of the application, allow users to determine in what extend the food is dangerous for rabbits, in which quantities we can give it to them and when. The most approptiate application type is mobile application, Android especcially, since the phone is always with us and we can get info about food everywere with internet connection.
 
-Despite the name, currently we are not focusing on all sorts and breeds of animals. We are focusing on rabbits only. And also we are planning only Android app, because we have competencies only in that. 
+# Team members
 
-Similar apps:
-- [Cat Dog Eat](https://play.google.com/store/apps/details?id=com.quagtech.candogseat.app&hl=en&gl=US)
-- [PAWSM — Dog nutrition](https://play.google.com/store/apps/details?id=com.pawsm.mobile)
-- [NutriPup](https://play.google.com/store/apps/details?id=com.nextgen.feedemsmart)
+- Anton Brisilin (BS18-SB)
+- Grigoriy Dolgov (BS18-SE)
+- Ravida Saitova (BS18-DS)
 
-# Sprint 2
+# Project development details
 
-At this sprint our goal was to make our android application to be able to operate over network with some backend. Our tasks were: Create some backend, capable of returning food info, with some authentication mechanism (see #21), Design UI(#23), and update android app to conform backend(#22). 
-Also we set up CI/CD for android app, which just builds an app for now (and makes sure, that it builds successfully). Result of build -- **ready APK** -- is also generated and available for download
+Application consist of 2 main parts: Android app itself and the server to store all products, user information, which allows user to connect from any devices and places to their personal account
 
-We made a progress on US #3 and #17, but haven't completed them, since they are large (and we didn't plan it). For now, there were no sprint review with PO, so we don't close any issues yet. 
+## Useful links 
 
-We setup automatic generation of Kotlin docs with Dokka, but without CI/CD yet.
-Docs for code in `master` are available [here](https://drive.google.com/file/d/1aKPRUFoc7iDrqWjkPv2SnEDMkkhc3-G0/view?usp=sharing).
+- [Project backlog](https://github.com/orgs/inno-nyan-dev/projects/1)
+- [Project documentation CI/CD](https://inno-nyan-dev.github.io/PetFood/)
 
-Unfortunately, the tests are weakest part of our work: we haven't any neither for Android app, nor for server.
+### Backend technology used
+
+- Spring
+- Maven
+- Docker
+
+Server arcitecture is MC (Model-Connector) based and written in Kotlin language.
