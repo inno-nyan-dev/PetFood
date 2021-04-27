@@ -12,10 +12,12 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/foodPicture"
             android:layout_width="72dp"
             android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearance="@style/ShapeAppearance.App.CircleImageView"
 
             tools:src="@tools:sample/avatars" />
 
@@ -23,25 +25,27 @@
             android:id="@+id/foodName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-medium"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:layout_marginHorizontal="12dp"
 
             tools:text="Cinnamon pancakes" />
 
         <TextView
             android:id="@+id/dangerLevel"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:background="@drawable/background_food_danger_level"
             android:maxLines="1"
-            android:padding="4dp"
             android:paddingHorizontal="8dp"
-            android:textSize="24sp"
+            android:paddingVertical="4dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="14sp"
 
-            tools:text="Danger" />
+            tools:text="Forbidden" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

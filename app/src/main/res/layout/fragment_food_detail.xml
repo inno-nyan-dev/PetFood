@@ -11,22 +11,34 @@
         android:layout_width="128dp"
         android:layout_height="128dp"
 
-        app:layout_constraintBottom_toBottomOf="@+id/foodPicture"
-        app:layout_constraintEnd_toEndOf="@+id/foodPicture"
-        app:layout_constraintStart_toStartOf="@+id/foodPicture"
-        app:layout_constraintTop_toTopOf="@+id/foodPicture" />
+        app:layout_constraintBottom_toBottomOf="@+id/foodPictureWrapper"
+        app:layout_constraintEnd_toEndOf="@+id/foodPictureWrapper"
+        app:layout_constraintStart_toStartOf="@+id/foodPictureWrapper"
+        app:layout_constraintTop_toTopOf="@+id/foodPictureWrapper" />
 
-    <ImageView
-        android:id="@+id/foodPicture"
+    <FrameLayout
+        android:id="@+id/foodPictureWrapper"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:scaleType="fitCenter"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        tools:src="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/foodPicture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+
+            tools:src="@tools:sample/avatars" />
+
+        <View
+            android:background="@drawable/gradient_food_detail_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/dangerLevel"
@@ -39,8 +51,8 @@
         android:paddingHorizontal="8dp"
         android:textSize="24sp"
 
-        app:layout_constraintEnd_toEndOf="@+id/foodPicture"
-        app:layout_constraintTop_toTopOf="@+id/foodPicture"
+        app:layout_constraintEnd_toEndOf="@+id/foodPictureWrapper"
+        app:layout_constraintTop_toTopOf="@+id/foodPictureWrapper"
 
         tools:text="Danger" />
 
@@ -51,7 +63,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodPicture"
+        app:layout_constraintTop_toBottomOf="@+id/foodPictureWrapper"
 
         tools:text="@tools:sample/lorem/random" />
 
