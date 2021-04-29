@@ -19,17 +19,39 @@ data class FoodUI(
     val name: String,
     val pictureData: FoodPicture,
     val dangerLevel: UIDangerLevel,
+    val isFavorite: Boolean,
     override val uid: Int,
     override val viewType: Int = R.layout.item_food
 ) : ViewTyped
 
+/**
+ * Callback that invoked by [FoodViewHolder] when its view gets clicks
+ */
+interface FoodItemClickCallback {
+    /**
+     * Invoked when an item gets clicked
+     */
+    fun itemClicked(food: FoodUI)
+
+    /**
+     * Invoked when star checkbox on an item gets clicked
+     */
+    fun starClicked(food: FoodUI, isChecked: Boolean)
+}
+
+/**
+ * ViewHolder to display [FoodUI] item in RecyclerView
+ */
 class FoodViewHolder(
     private val binding: ItemFoodBinding,
-    private val clickCallback: (FoodUI) -> Unit
+    private val clickCallback: FoodItemClickCallback
 ) :
     BaseViewHolder<FoodUI>(binding.root) {
     override fun bind(item: FoodUI) {
-        binding.root.setOnClickListener { clickCallback(item) }
+        binding.root.setOnClickListener { clickCallback.itemClicked(item) }
+        binding.isFavorite.setOnClickListener {
+            clickCallback.starClicked(item, item.isFavorite)
+        }
 
         Single.defer {
             Single.just(
@@ -45,6 +67,7 @@ class FoodViewHolder(
                 onSuccess = { binding.foodPicture.setImageDrawable(it) }
             )
 
+        binding.isFavorite.isChecked = item.isFavorite
         binding.foodName.text = item.name
         binding.dangerLevel.text = item.dangerLevel.levelString
         binding.dangerLevel.setTextColor(

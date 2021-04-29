@@ -1,15 +1,14 @@
-package com.mexator.petfoodinspector.domain
+package com.mexator.petfoodinspector.domain.datasource
 
 import com.mexator.petfoodinspector.domain.data.FoodDetail
+import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
 import io.reactivex.rxjava3.core.Single
-
-typealias FoodID = Int
 
 /**
  * Abstract data source, capable of returning list of food items
  */
-interface FoodRepository {
+interface FoodDataSource {
 
     fun getFoodList(): Single<List<FoodItem>>
 

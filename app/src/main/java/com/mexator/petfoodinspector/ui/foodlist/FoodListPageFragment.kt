@@ -14,7 +14,10 @@ import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.FragmentPageFoodlistBinding
 import com.mexator.petfoodinspector.ui.dpToPx
 import com.mexator.petfoodinspector.ui.fooddetail.FoodDetailFragment
+import com.mexator.petfoodinspector.ui.foodlist.model.FoodListViewModel
+import com.mexator.petfoodinspector.ui.foodlist.model.FoodListViewState
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodHolderFactory
+import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodItemClickCallback
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodUI
 import com.mexator.petfoodinspector.ui.foodsearch.FoodSearchFragment
 import com.mexator.petfoodinspector.ui.recycler.BaseAdapter
@@ -25,10 +28,24 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.*
 
 class FoodListPageFragment : Fragment() {
     private lateinit var binding: FragmentPageFoodlistBinding
-    private val adapter = BaseAdapter<ViewTyped>(FoodHolderFactory(this::onFoodClicked))
+    private val foodClickCallback:FoodItemClickCallback = object : FoodItemClickCallback {
+        override fun itemClicked(food: FoodUI) {
+            this@FoodListPageFragment.onFoodClicked(food)
+        }
+
+        override fun starClicked(food: FoodUI, isChecked: Boolean) {
+            if (isChecked) {
+                viewModel.removeFav(food.uid)
+            } else {
+                viewModel.addFav(food)
+            }
+        }
+    }
+    private val adapter = BaseAdapter<ViewTyped>(FoodHolderFactory(foodClickCallback))
     private val viewModel: FoodListViewModel by navGraphViewModels(R.id.main_navigation)
     private var compositeDisposable = CompositeDisposable()
 
@@ -82,10 +99,10 @@ class FoodListPageFragment : Fragment() {
         }
     }
 
-    private fun applyViewState(state: FoodListViewModel.FoodListViewState) {
+    private fun applyViewState(state: FoodListViewState) {
         binding.foodRecycler.visibility = if (state.progress) View.INVISIBLE else View.VISIBLE
         binding.foodProgress.visibility = if (state.progress) View.VISIBLE else View.INVISIBLE
-        adapter.items = state.displayedItems ?: listOf()
+        adapter.items = state.displayedItems
         if (state.error != null && !state.progress) {
             errorSnackBar.setText(state.error)
             errorSnackBar.show()

@@ -26,6 +26,7 @@
             tools:src="@tools:sample/avatars" />
 
         <CheckBox
+            android:id="@+id/isFavorite"
             android:backgroundTint="@color/like_tint_selector"
             android:layout_width="30dp"
             android:layout_height="30dp"

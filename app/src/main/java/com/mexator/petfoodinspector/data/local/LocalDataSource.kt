@@ -2,9 +2,9 @@ package com.mexator.petfoodinspector.data.local
 
 import android.content.Context
 import com.mexator.petfoodinspector.domain.data.FoodDetail
-import com.mexator.petfoodinspector.domain.FoodID
-import com.mexator.petfoodinspector.domain.FoodRepository
+import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
+import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import kotlinx.serialization.decodeFromString
@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
-object LocalRepository : FoodRepository {
+object LocalDataSource : FoodDataSource {
     private const val DATA_FILENAME = "data.json"
     private val json = Json { ignoreUnknownKeys = true }
 

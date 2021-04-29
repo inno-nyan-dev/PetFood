@@ -1,15 +1,15 @@
 package com.mexator.petfoodinspector.data.mock
 
 import com.mexator.petfoodinspector.domain.data.FoodDetail
-import com.mexator.petfoodinspector.domain.FoodID
-import com.mexator.petfoodinspector.domain.FoodRepository
 import com.mexator.petfoodinspector.domain.data.DangerLevel
+import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
+import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import com.mexator.petfoodinspector.ui.data.FoodPicture
 import io.reactivex.rxjava3.core.Single
 import java.util.concurrent.TimeUnit
 
-object MockRepository : FoodRepository {
+object MockDataSource : FoodDataSource {
     private val urls = listOf<String>(
         "https://public-media.si-cdn.com/filer/d5/24/d5243019-e0fc-4b3c-8cdb-48e22f38bff2/istock-183380744.jpg",
         "https://cdn.britannica.com/75/174375-050-BC6968AE/Hazelnuts-fruit-compound-ovary-seed.jpg",

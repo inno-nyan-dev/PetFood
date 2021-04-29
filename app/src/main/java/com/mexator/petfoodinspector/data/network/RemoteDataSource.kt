@@ -5,11 +5,11 @@ import com.mexator.petfoodinspector.BuildConfig
 import com.mexator.petfoodinspector.data.UserRepository
 import com.mexator.petfoodinspector.data.network.dto.RemoteFoodItem
 import com.mexator.petfoodinspector.data.network.dto.UserAuthData
-import com.mexator.petfoodinspector.domain.FoodID
-import com.mexator.petfoodinspector.domain.FoodRepository
 import com.mexator.petfoodinspector.domain.data.FoodDetail
+import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
 import com.mexator.petfoodinspector.domain.data.User
+import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import com.mexator.petfoodinspector.ui.data.FoodPicture
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import io.reactivex.rxjava3.core.Completable
@@ -23,10 +23,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 /**
- * Repository that is [FoodRepository] and [UserRepository]
+ * Repository that is [FoodDataSource] and [UserRepository]
  * and takes data from API
  */
-object RemoteRepository : FoodRepository, UserRepository {
+object RemoteDataSource : FoodDataSource, UserRepository {
     private const val baseUrl = BuildConfig.API_URL
     private val petFoodAPI: PetFoodAPI
 

@@ -3,7 +3,7 @@ package com.mexator.petfoodinspector.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mexator.petfoodinspector.data.UserRepository
-import com.mexator.petfoodinspector.data.network.RemoteRepository
+import com.mexator.petfoodinspector.data.network.RemoteDataSource
 import com.mexator.petfoodinspector.domain.data.User
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -16,7 +16,7 @@ data class DrawerState(
 )
 
 class DrawerViewModel : ViewModel() {
-    private val repository: UserRepository = RemoteRepository
+    private val repository: UserRepository = RemoteDataSource
     private val compositeDisposable = CompositeDisposable()
 
     private val _viewState: BehaviorSubject<DrawerState> = BehaviorSubject.create()

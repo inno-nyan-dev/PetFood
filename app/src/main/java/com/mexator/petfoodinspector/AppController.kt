@@ -2,7 +2,7 @@ package com.mexator.petfoodinspector
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.mexator.petfoodinspector.data.local.LocalRepository
+import com.mexator.petfoodinspector.data.local.LocalDataSource
 
 /**
  * Yes, I use Application as DI provider
@@ -10,7 +10,7 @@ import com.mexator.petfoodinspector.data.local.LocalRepository
 class AppController : Application() {
     override fun onCreate() {
         super.onCreate()
-        LocalRepository.provideAppContext(applicationContext)
+        LocalDataSource.provideAppContext(applicationContext)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }
