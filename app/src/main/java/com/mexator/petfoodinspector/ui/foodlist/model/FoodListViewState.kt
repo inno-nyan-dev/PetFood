@@ -1,6 +1,7 @@
 package com.mexator.petfoodinspector.ui.foodlist.model
 
-import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodUI
+import com.mexator.petfoodinspector.domain.data.FoodID
+import com.mexator.petfoodinspector.domain.data.FoodItem
 
 /**
  * State of food list screen.
@@ -11,5 +12,6 @@ import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodUI
 data class FoodListViewState(
     val progress: Boolean = false,
     val error: String? = null,
-    val displayedItems: List<FoodUI> = listOf(),
+    val favoriteIDs: List<FoodID> = listOf(),
+    val displayedItems: List<FoodItem> = listOf(),
 )

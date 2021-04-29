@@ -10,8 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.mexator.petfoodinspector.BuildConfig
 import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.FragmentPageFoodlistBinding
+import com.mexator.petfoodinspector.domain.data.FoodItem
+import com.mexator.petfoodinspector.ui.data.toUIDangerLevel
 import com.mexator.petfoodinspector.ui.dpToPx
 import com.mexator.petfoodinspector.ui.fooddetail.FoodDetailFragment
 import com.mexator.petfoodinspector.ui.foodlist.model.FoodListViewModel
@@ -20,7 +23,7 @@ import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodHolderFactory
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodItemClickCallback
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodUI
 import com.mexator.petfoodinspector.ui.foodsearch.FoodSearchFragment
-import com.mexator.petfoodinspector.ui.recycler.BaseAdapter
+import com.mexator.petfoodinspector.ui.recycler.base.BaseAdapter
 import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
 import com.mexator.petfoodinspector.ui.recycler.common.SpaceDecorator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -32,16 +35,16 @@ import java.util.*
 
 class FoodListPageFragment : Fragment() {
     private lateinit var binding: FragmentPageFoodlistBinding
-    private val foodClickCallback:FoodItemClickCallback = object : FoodItemClickCallback {
+    private val foodClickCallback: FoodItemClickCallback = object : FoodItemClickCallback {
         override fun itemClicked(food: FoodUI) {
             this@FoodListPageFragment.onFoodClicked(food)
         }
 
-        override fun starClicked(food: FoodUI, isChecked: Boolean) {
-            if (isChecked) {
-                viewModel.removeFav(food.uid)
+        override fun starClicked(food: FoodUI) {
+            if (food.isFavorite) {
+                viewModel.unFav(food.uid)
             } else {
-                viewModel.addFav(food)
+                viewModel.fav(food.uid)
             }
         }
     }
@@ -74,7 +77,6 @@ class FoodListPageFragment : Fragment() {
 
         compositeDisposable +=
             viewModel.viewState
-                .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
@@ -82,7 +84,7 @@ class FoodListPageFragment : Fragment() {
                     onError = { throwable -> Log.e(TAG, "", throwable) }
                 )
 
-        viewModel.loadInitialContent()
+        viewModel.onAttachView()
     }
 
     override fun onDestroyView() {
@@ -93,22 +95,38 @@ class FoodListPageFragment : Fragment() {
     private val errorSnackBar: Snackbar by lazy {
         Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE).apply {
             setAction(R.string.action_retry) {
-                viewModel.loadInitialContent()
+                viewModel.onAttachView()
                 this.dismiss()
             }
         }
     }
 
     private fun applyViewState(state: FoodListViewState) {
+        if (BuildConfig.DEBUG) Log.d(TAG, state.toString())
         binding.foodRecycler.visibility = if (state.progress) View.INVISIBLE else View.VISIBLE
         binding.foodProgress.visibility = if (state.progress) View.VISIBLE else View.INVISIBLE
         adapter.items = state.displayedItems
+            .map { mapItem(it, it.id in state.favoriteIDs) }
+            .sortedWith(compareBy(
+                { !it.isFavorite },
+                { it.name }
+            ))
         if (state.error != null && !state.progress) {
             errorSnackBar.setText(state.error)
             errorSnackBar.show()
         } else {
             errorSnackBar.dismiss()
         }
+    }
+
+    private fun mapItem(foodItem: FoodItem, isFavorite: Boolean): FoodUI {
+        return FoodUI(
+            foodItem.name,
+            foodItem.imageData,
+            foodItem.dangerLevel.toUIDangerLevel(),
+            isFavorite,
+            foodItem.id
+        )
     }
 
     private fun onFoodClicked(food: FoodUI) {

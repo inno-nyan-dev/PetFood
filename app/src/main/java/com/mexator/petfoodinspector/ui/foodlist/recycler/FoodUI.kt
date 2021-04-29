@@ -8,7 +8,7 @@ import com.mexator.petfoodinspector.ui.data.FoodPicture
 import com.mexator.petfoodinspector.ui.data.FoodPictureDrawableFactory
 import com.mexator.petfoodinspector.ui.data.UIDangerLevel
 import com.mexator.petfoodinspector.ui.getResources
-import com.mexator.petfoodinspector.ui.recycler.BaseViewHolder
+import com.mexator.petfoodinspector.ui.recycler.base.BaseViewHolder
 import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -36,7 +36,7 @@ interface FoodItemClickCallback {
     /**
      * Invoked when star checkbox on an item gets clicked
      */
-    fun starClicked(food: FoodUI, isChecked: Boolean)
+    fun starClicked(food: FoodUI)
 }
 
 /**
@@ -50,9 +50,8 @@ class FoodViewHolder(
     override fun bind(item: FoodUI) {
         binding.root.setOnClickListener { clickCallback.itemClicked(item) }
         binding.isFavorite.setOnClickListener {
-            clickCallback.starClicked(item, item.isFavorite)
+            clickCallback.starClicked(item)
         }
-
         Single.defer {
             Single.just(
                 FoodPictureDrawableFactory().createDrawable(

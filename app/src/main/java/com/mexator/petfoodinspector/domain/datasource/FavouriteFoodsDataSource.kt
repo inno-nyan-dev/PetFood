@@ -12,10 +12,10 @@ interface FavouriteFoodsDataSource {
     /**
      * Get favorite food items
      */
-    fun getFavoriteFoods(): Single<List<FoodItem>>
+    fun getFavoriteFoods(): Single<List<FoodID>>
     /**
      * Add food item to favorite
      */
-    fun addToFavorite(food: FoodItem):Completable
+    fun addToFavorite(food: FoodID):Completable
     fun removeFromFavorite(foodId:FoodID):Completable
 }

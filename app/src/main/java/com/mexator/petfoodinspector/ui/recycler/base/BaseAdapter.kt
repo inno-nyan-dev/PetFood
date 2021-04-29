@@ -1,4 +1,4 @@
-package com.mexator.petfoodinspector.ui.recycler
+package com.mexator.petfoodinspector.ui.recycler.base
 
 /**
  * @author Anton Brisilin a.brisilin@innopolis.university
@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.mexator.petfoodinspector.ui.recycler.base.BaseHolderFactory
-import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
 
 /**
  * Base class for all ViewHolders
