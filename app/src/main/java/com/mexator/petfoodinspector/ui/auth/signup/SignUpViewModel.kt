@@ -1,5 +1,6 @@
 package com.mexator.petfoodinspector.ui.auth.signup
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import com.mexator.petfoodinspector.data.UserDataSource
 import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
@@ -26,20 +27,23 @@ class SignUpViewModel : ViewModel() {
     fun logIn(login: String, password: String) {
         _viewState.onNext(ProgressState)
 
-        compositeDisposable += repository
-            .register(login, password)
-            .ignoreElement()
-            .subscribeBy(
-                onComplete = { _viewState.onNext(SuccessState) },
-                onError = {
-                    val message = if (it is HttpException) {
-                        it.errorMessage().message
-                    } else {
-                        it.message ?: "Unknown error"
+        if (Patterns.EMAIL_ADDRESS.matcher(login).matches())
+            compositeDisposable += repository
+                .register(login, password)
+                .ignoreElement()
+                .subscribeBy(
+                    onComplete = { _viewState.onNext(SuccessState) },
+                    onError = {
+                        val message = if (it is HttpException) {
+                            it.errorMessage().message
+                        } else {
+                            it.message ?: "Unknown error"
+                        }
+                        _viewState.onNext(ErrorState(message))
                     }
-                    _viewState.onNext(ErrorState(message))
-                }
-            )
+                )
+        else
+            _viewState.onNext(ErrorState("Please, enter valid email address"))
     }
 
     override fun onCleared() {
