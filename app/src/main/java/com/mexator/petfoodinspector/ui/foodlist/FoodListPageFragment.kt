@@ -19,6 +19,7 @@ import com.mexator.petfoodinspector.ui.dpToPx
 import com.mexator.petfoodinspector.ui.fooddetail.FoodDetailFragment
 import com.mexator.petfoodinspector.ui.foodlist.model.FoodListViewModel
 import com.mexator.petfoodinspector.ui.foodlist.model.FoodListViewState
+import com.mexator.petfoodinspector.ui.foodlist.model.TempEvent
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodHolderFactory
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodItemClickCallback
 import com.mexator.petfoodinspector.ui.foodlist.recycler.FoodUI
@@ -81,7 +82,23 @@ class FoodListPageFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                     onNext = this::applyViewState,
-                    onError = { throwable -> Log.e(TAG, "", throwable) }
+                )
+
+        compositeDisposable +=
+            viewModel.tempEventsObservable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeBy(
+                    onNext = { event ->
+                        when (event) {
+                            is TempEvent.FavError -> Snackbar.make(
+                                requireContext(),
+                                binding.root,
+                                event.message,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 )
 
         viewModel.onAttachView()

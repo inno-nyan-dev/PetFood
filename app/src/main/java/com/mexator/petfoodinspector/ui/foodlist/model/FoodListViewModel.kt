@@ -2,8 +2,8 @@ package com.mexator.petfoodinspector.ui.foodlist.model
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.mexator.petfoodinspector.data.mock.MockFavFoodsSource
-import com.mexator.petfoodinspector.data.network.RemoteDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFavoritesDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.domain.FoodListRepository
 import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
@@ -14,12 +14,13 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.kotlin.zipWith
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 
 class FoodListViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     private val repository: FoodListRepository =
-        FoodListRepository(RemoteDataSource, MockFavFoodsSource)
+        FoodListRepository(RemoteFoodsDataSource, RemoteFoodsDataSource, RemoteFavoritesDataSource)
 
     private val searchQueries: BehaviorSubject<String> = BehaviorSubject.create()
     private val _viewState: BehaviorSubject<FoodListViewState> = BehaviorSubject.create()
@@ -32,6 +33,11 @@ class FoodListViewModel : ViewModel() {
                     .filter { satisfiesQuery(it, query) })
             })
 
+    /**
+     * Mechanism to show non-persistent error messages, e.g. errors
+     */
+    private val _tempEventsObservable = PublishSubject.create<TempEvent>()
+    val tempEventsObservable: Observable<TempEvent> = _tempEventsObservable
 
     init {
         _viewState.onNext(FoodListViewState())
@@ -40,7 +46,10 @@ class FoodListViewModel : ViewModel() {
     fun onAttachView() {
         _viewState.mapValue { it.copy(progress = true, error = null) }
         compositeDisposable += repository.getFoodList()
-            .zipWith(repository.getFavoriteFoods())
+            .zipWith(
+                repository.getFavoriteFoods()
+                    .onErrorReturn { emptyList() }
+            )
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { (foods, favFoods) ->
@@ -63,6 +72,8 @@ class FoodListViewModel : ViewModel() {
             .subscribeBy(
                 onError = { error ->
                     Log.e(TAG, "error while adding reaction", error)
+
+                    _tempEventsObservable.onNext(TempEvent.FavError())
                     _viewState.mapValue { it.copy(favoriteIDs = it.favoriteIDs - foodID) }
                 }
             )
@@ -75,6 +86,8 @@ class FoodListViewModel : ViewModel() {
             .subscribeBy(
                 onError = { error ->
                     Log.e(TAG, "error while removing reaction", error)
+
+                    _tempEventsObservable.onNext(TempEvent.FavError())
                     _viewState.mapValue { it.copy(favoriteIDs = it.favoriteIDs + foodID) }
                 }
             )

@@ -1,13 +1,13 @@
 package com.mexator.petfoodinspector
 
-import com.mexator.petfoodinspector.data.network.RemoteDataSource
-import com.mexator.petfoodinspector.domain.FoodDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
+import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import org.junit.Assert
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 
 class BackendConnectivityTest {
-    private val dataSource: FoodDataSource = RemoteDataSource
+    private val dataSource: FoodDataSource = RemoteFoodsDataSource
 
     @Test
     fun testBackendServesData() {

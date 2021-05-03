@@ -1,7 +1,7 @@
 package com.mexator.petfoodinspector.domain.datasource
 
 import com.mexator.petfoodinspector.domain.data.FoodID
-import com.mexator.petfoodinspector.domain.data.FoodItem
+import com.mexator.petfoodinspector.domain.data.User
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
@@ -12,10 +12,11 @@ interface FavouriteFoodsDataSource {
     /**
      * Get favorite food items
      */
-    fun getFavoriteFoods(): Single<List<FoodID>>
+    fun getFavoriteFoods(user: User): Single<List<FoodID>>
+
     /**
      * Add food item to favorite
      */
-    fun addToFavorite(food: FoodID):Completable
-    fun removeFromFavorite(foodId:FoodID):Completable
+    fun addToFavorite(user: User, foodId: FoodID): Completable
+    fun removeFromFavorite(user: User, foodId: FoodID): Completable
 }

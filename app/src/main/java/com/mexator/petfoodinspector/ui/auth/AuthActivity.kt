@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.mexator.petfoodinspector.data.UserRepository
-import com.mexator.petfoodinspector.data.network.RemoteDataSource
+import com.mexator.petfoodinspector.data.UserDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.databinding.ActivityAuthBinding
 
 class AuthActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class AuthActivity : AppCompatActivity() {
         Navigation.findNavController(binding.fragmentContainer)
     }
 
-    private val repository: UserRepository = RemoteDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

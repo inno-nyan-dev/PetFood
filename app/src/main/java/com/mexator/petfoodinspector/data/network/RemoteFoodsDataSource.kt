@@ -2,7 +2,7 @@ package com.mexator.petfoodinspector.data.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.mexator.petfoodinspector.BuildConfig
-import com.mexator.petfoodinspector.data.UserRepository
+import com.mexator.petfoodinspector.data.UserDataSource
 import com.mexator.petfoodinspector.data.network.dto.RemoteFoodItem
 import com.mexator.petfoodinspector.data.network.dto.UserAuthData
 import com.mexator.petfoodinspector.domain.data.FoodDetail
@@ -23,10 +23,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 /**
- * Repository that is [FoodDataSource] and [UserRepository]
+ * Repository that is [FoodDataSource] and [UserDataSource]
  * and takes data from API
  */
-object RemoteDataSource : FoodDataSource, UserRepository {
+object RemoteFoodsDataSource : FoodDataSource, UserDataSource {
     private const val baseUrl = BuildConfig.API_URL
     private val petFoodAPI: PetFoodAPI
 

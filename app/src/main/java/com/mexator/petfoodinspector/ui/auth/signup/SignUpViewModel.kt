@@ -1,8 +1,8 @@
 package com.mexator.petfoodinspector.ui.auth.signup
 
 import androidx.lifecycle.ViewModel
-import com.mexator.petfoodinspector.data.UserRepository
-import com.mexator.petfoodinspector.data.network.RemoteDataSource
+import com.mexator.petfoodinspector.data.UserDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.data.network.dto.errorMessage
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -20,7 +20,7 @@ class SignUpViewModel : ViewModel() {
     private val _viewState: BehaviorSubject<SignInViewState> = BehaviorSubject.create()
     val viewState: Observable<SignInViewState> = _viewState
 
-    private val repository: UserRepository = RemoteDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource
     private val compositeDisposable = CompositeDisposable()
 
     fun logIn(login: String, password: String) {

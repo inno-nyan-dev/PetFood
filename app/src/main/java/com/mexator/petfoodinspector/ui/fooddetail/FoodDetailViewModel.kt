@@ -1,7 +1,7 @@
 package com.mexator.petfoodinspector.ui.fooddetail
 
 import androidx.lifecycle.ViewModel
-import com.mexator.petfoodinspector.data.network.RemoteDataSource
+import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.domain.data.FoodDetail
 import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import io.reactivex.rxjava3.core.Observable
@@ -21,7 +21,7 @@ class FoodDetailViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val dataSource: FoodDataSource = RemoteDataSource
+    private val dataSource: FoodDataSource = RemoteFoodsDataSource
 
     override fun onCleared() {
         super.onCleared()
