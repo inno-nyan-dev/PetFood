@@ -51,7 +51,7 @@ class SignUpFragment : Fragment() {
             }
             is SuccessState -> {
                 binding.progress.visibility = View.INVISIBLE
-                val startActivityIntent = Intent(activity, StartActivity::class.java)
+                val startActivityIntent = Intent(requireActivity(), StartActivity::class.java)
                 startActivity(startActivityIntent)
                 activity?.finish()
             }

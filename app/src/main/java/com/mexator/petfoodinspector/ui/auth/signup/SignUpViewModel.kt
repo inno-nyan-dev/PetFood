@@ -11,6 +11,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import retrofit2.HttpException
+import java.util.regex.Pattern
 
 sealed class SignInViewState
 object ProgressState : SignInViewState()
@@ -27,8 +28,24 @@ class SignUpViewModel : ViewModel() {
     fun logIn(login: String, password: String) {
         _viewState.onNext(ProgressState)
 
-        if (Patterns.EMAIL_ADDRESS.matcher(login).matches())
-            compositeDisposable += repository
+        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(login).matches()
+        val isPassValid = Pattern.compile(PASSWORD_PATTERN).matcher(password).matches()
+
+        when {
+            !isEmailValid -> _viewState.onNext(
+                ErrorState(
+                    "Please, enter valid email address"
+                )
+            )
+
+            !isPassValid -> _viewState.onNext(
+                ErrorState(
+                    "Password should contain at least: " +
+                            "1 number, 1 character, 1 uppercase letter, 1 special character"
+                )
+            )
+
+            else -> compositeDisposable += repository
                 .register(login, password)
                 .ignoreElement()
                 .subscribeBy(
@@ -42,8 +59,7 @@ class SignUpViewModel : ViewModel() {
                         _viewState.onNext(ErrorState(message))
                     }
                 )
-        else
-            _viewState.onNext(ErrorState("Please, enter valid email address"))
+        }
     }
 
     override fun onCleared() {
@@ -52,6 +68,8 @@ class SignUpViewModel : ViewModel() {
     }
 
     companion object {
+        private const val PASSWORD_PATTERN =
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^*&+=])(?=\\S+$).{4,}$"
         private const val TAG = "SignUpViewModel"
     }
 }
