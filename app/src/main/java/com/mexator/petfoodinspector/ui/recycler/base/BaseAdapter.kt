@@ -47,13 +47,13 @@ open class BaseAdapter<T : ViewTyped>(private val holderFactory: BaseHolderFacto
 
     }
 
-    protected open val differ: AsyncListDiffer<ViewTyped> by lazy {
+    open val differ: AsyncListDiffer<ViewTyped> by lazy {
         AsyncListDiffer(this, diffCallback)
     }
 
-    var items: List<ViewTyped> = emptyList()
+    var items: List<ViewTyped>
+        get() = differ.currentList
         set(value) {
-            field = value
             differ.submitList(value)
         }
 

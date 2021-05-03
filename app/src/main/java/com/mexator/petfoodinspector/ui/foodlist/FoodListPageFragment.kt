@@ -28,10 +28,14 @@ import com.mexator.petfoodinspector.ui.recycler.base.BaseAdapter
 import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
 import com.mexator.petfoodinspector.ui.recycler.common.SpaceDecorator
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.CompletableSubject
+import io.reactivex.rxjava3.subscribers.DisposableSubscriber
 import java.util.*
 
 class FoodListPageFragment : Fragment() {
@@ -76,13 +80,27 @@ class FoodListPageFragment : Fragment() {
                 onError = { ex -> Log.wtf(TAG, "This should never happen", ex) }
             )
 
-        compositeDisposable +=
-            viewModel.viewState
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                    onNext = this::applyViewState,
-                )
+
+        val vmSubscriber = object : DisposableSubscriber<FoodListViewState>() {
+            override fun onStart() {
+                request(1)
+            }
+            override fun onNext(t: FoodListViewState) {
+                applyViewState(t).subscribe {
+                    request(1)
+                }
+            }
+            override fun onError(t: Throwable?) { Log.e(TAG,"",t) }
+            override fun onComplete() {}
+        }
+
+        compositeDisposable += vmSubscriber
+
+        viewModel.viewState
+            .toFlowable(BackpressureStrategy.BUFFER)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(vmSubscriber)
 
         compositeDisposable +=
             viewModel.tempEventsObservable
@@ -118,22 +136,29 @@ class FoodListPageFragment : Fragment() {
         }
     }
 
-    private fun applyViewState(state: FoodListViewState) {
+    private fun applyViewState(state: FoodListViewState): Completable {
         if (BuildConfig.DEBUG) Log.d(TAG, state.toString())
+        val renderFinished = CompletableSubject.create()
+
         binding.foodRecycler.visibility = if (state.progress) View.INVISIBLE else View.VISIBLE
         binding.foodProgress.visibility = if (state.progress) View.VISIBLE else View.INVISIBLE
-        adapter.items = state.displayedItems
+
+        val newList = state.displayedItems
             .map { mapItem(it, it.id in state.favoriteIDs) }
             .sortedWith(compareBy(
                 { !it.isFavorite },
                 { it.name }
             ))
+        adapter.differ.submitList(newList) { renderFinished.onComplete() }
+
         if (state.error != null && !state.progress) {
             errorSnackBar.setText(state.error)
             errorSnackBar.show()
         } else {
             errorSnackBar.dismiss()
         }
+
+        return renderFinished
     }
 
     private fun mapItem(foodItem: FoodItem, isFavorite: Boolean): FoodUI {
