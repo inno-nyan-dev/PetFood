@@ -124,7 +124,7 @@ class FoodListPageFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        compositeDisposable.dispose()
+        compositeDisposable.clear()
     }
 
     private val errorSnackBar: Snackbar by lazy {
