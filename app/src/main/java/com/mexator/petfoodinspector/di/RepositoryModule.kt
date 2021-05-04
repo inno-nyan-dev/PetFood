@@ -1,6 +1,7 @@
 package com.mexator.petfoodinspector.di
 
 import com.mexator.petfoodinspector.data.UserDataSource
+import com.mexator.petfoodinspector.data.network.PetFoodAPI
 import com.mexator.petfoodinspector.data.network.RemoteFavoritesDataSource
 import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.domain.datasource.FavouriteFoodsDataSource
@@ -13,13 +14,16 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Singleton
     @Provides
-    fun getUserDataSource(): UserDataSource = RemoteFoodsDataSource()
+    fun getUserDataSource(petFoodAPI: PetFoodAPI): UserDataSource =
+        RemoteFoodsDataSource(petFoodAPI)
 
     @Singleton
     @Provides
-    fun getFoodsDataSource(): FoodDataSource = RemoteFoodsDataSource()
+    fun getFoodsDataSource(petFoodAPI: PetFoodAPI): FoodDataSource =
+        RemoteFoodsDataSource(petFoodAPI)
 
     @Singleton
     @Provides
-    fun getFavoritesDataSource(): FavouriteFoodsDataSource = RemoteFavoritesDataSource()
+    fun getFavoritesDataSource(petFoodAPI: PetFoodAPI): FavouriteFoodsDataSource =
+        RemoteFavoritesDataSource(petFoodAPI)
 }

@@ -1,6 +1,5 @@
 package com.mexator.petfoodinspector.data.network
 
-import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.User
 import com.mexator.petfoodinspector.domain.datasource.FavouriteFoodsDataSource
@@ -8,13 +7,8 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class RemoteFavoritesDataSource() : FavouriteFoodsDataSource {
-    @Inject
-    lateinit var petFoodAPI: PetFoodAPI
-
-    init {
-        AppController.component.inject(this)
-    }
+class RemoteFavoritesDataSource @Inject constructor(private val petFoodAPI: PetFoodAPI) :
+    FavouriteFoodsDataSource {
 
     override fun getFavoriteFoods(user: User): Single<List<FoodID>> =
         petFoodAPI.getFavorites(user.token)

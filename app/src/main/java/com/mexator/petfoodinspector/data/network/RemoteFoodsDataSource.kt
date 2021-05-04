@@ -19,15 +19,8 @@ import javax.inject.Inject
  * Repository that is [FoodDataSource] and [UserDataSource]
  * and takes data from API
  */
-class RemoteFoodsDataSource() : FoodDataSource,
+class RemoteFoodsDataSource @Inject constructor(private val petFoodAPI: PetFoodAPI) : FoodDataSource,
     UserDataSource {
-
-    @Inject
-    lateinit var petFoodAPI: PetFoodAPI
-
-    init {
-        AppController.component.inject(this)
-    }
 
     private var currentUser: User? = null
 
