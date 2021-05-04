@@ -9,8 +9,12 @@ import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Notification
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class FoodListRepository(
+/**
+ * [FoodListRepository] contains necessary methods for Food List screen to display data
+ */
+class FoodListRepository @Inject constructor(
     private val foodDataSource: FoodDataSource,
     private val userDataSource: UserDataSource,
     private val favouriteFoodsSource: FavouriteFoodsDataSource

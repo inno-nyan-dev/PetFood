@@ -14,6 +14,9 @@ import com.mexator.petfoodinspector.ui.StartActivity
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 
+/**
+ * Screen where use can register
+ */
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var fieldsBinding: AuthFieldsBinding
@@ -52,6 +55,8 @@ class SignUpFragment : Fragment() {
             is SuccessState -> {
                 binding.progress.visibility = View.INVISIBLE
                 val startActivityIntent = Intent(requireActivity(), StartActivity::class.java)
+                startActivityIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(startActivityIntent)
                 activity?.finish()
             }

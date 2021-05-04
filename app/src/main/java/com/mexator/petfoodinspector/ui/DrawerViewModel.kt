@@ -2,21 +2,27 @@ package com.mexator.petfoodinspector.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.data.UserDataSource
-import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.domain.data.User
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import javax.inject.Inject
 
 data class DrawerState(
     val user: User? = null
 )
 
 class DrawerViewModel : ViewModel() {
-    private val repository: UserDataSource = RemoteFoodsDataSource
+    @Inject
+    lateinit var repository: UserDataSource
+
+    init {
+        AppController.component.inject(this)
+    }
     private val compositeDisposable = CompositeDisposable()
 
     private val _viewState: BehaviorSubject<DrawerState> = BehaviorSubject.create()

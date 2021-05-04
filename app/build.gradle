@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.dokka'
+    id 'kotlin-kapt'
 }
 
 dokkaHtml {
@@ -29,11 +30,14 @@ android {
         applicationId "com.mexator.petfoodinspector"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        // Put version to resources
+        def gitHash = "git rev-parse --short HEAD".execute().text.trim()
+        resValue("string", "versionName", "$versionName - $gitHash")
 
         buildConfigField("String", "API_URL", "\"https://petfood.mexator.xyz:8443/api/v1/\"")
         buildConfigField("String", "IMAGE_API_URL", "\"https://petfood.mexator.xyz/images/\"")
@@ -93,6 +97,8 @@ dependencies {
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofit_rx_calladapter_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofit_serialization_converter_version"
 
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

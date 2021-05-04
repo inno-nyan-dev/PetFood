@@ -36,13 +36,15 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.CompletableSubject
 import io.reactivex.rxjava3.subscribers.DisposableSubscriber
-import java.util.*
 
+/**
+ * Screen that displays list of foods
+ */
 class FoodListPageFragment : Fragment() {
     private lateinit var binding: FragmentPageFoodlistBinding
     private val foodClickCallback: FoodItemClickCallback = object : FoodItemClickCallback {
         override fun itemClicked(food: FoodUI) {
-            this@FoodListPageFragment.onFoodClicked(food)
+            onFoodClicked(food)
         }
 
         override fun starClicked(food: FoodUI) {
@@ -67,6 +69,7 @@ class FoodListPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (BuildConfig.DEBUG) Log.d(TAG,"onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.foodRecycler.adapter = adapter
         binding.foodRecycler.addItemDecoration(SpaceDecorator(requireContext().dpToPx(8)))

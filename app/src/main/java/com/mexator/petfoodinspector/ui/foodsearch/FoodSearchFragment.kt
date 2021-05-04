@@ -1,16 +1,22 @@
 package com.mexator.petfoodinspector.ui.foodsearch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.mexator.petfoodinspector.BuildConfig
 import com.mexator.petfoodinspector.databinding.FragmentFoodSearchBinding
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
+/**
+ * Wrapper for FoodList fragments. Provides its children with ability to listen to
+ * search queries via [searchObservable]
+ */
 class FoodSearchFragment : Fragment() {
     private lateinit var binding: FragmentFoodSearchBinding
 
@@ -19,14 +25,12 @@ class FoodSearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        if (BuildConfig.DEBUG) Log.d(TAG,"onCreateView")
         binding = FragmentFoodSearchBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    private val searchSubject: BehaviorSubject<String> = BehaviorSubject.create()
-    init {
-        searchSubject.onNext("")
-    }
+    private val searchSubject: BehaviorSubject<String> = BehaviorSubject.createDefault("")
 
     /**
      * Emits trimmed, lower-cased search queries. Includes debounce already
@@ -48,5 +52,9 @@ class FoodSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.foodSearch.setOnQueryTextListener(onQueryTextListener)
+    }
+
+    companion object {
+        private const val TAG = "FoodSearchFragment"
     }
 }
