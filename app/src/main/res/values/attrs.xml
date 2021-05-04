@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CutEdgeCircleImageView">
+        <attr name="cutSize" format="float" />
+        <attr name="cutOffset" format="dimension" />
+    </declare-styleable>
+</resources>

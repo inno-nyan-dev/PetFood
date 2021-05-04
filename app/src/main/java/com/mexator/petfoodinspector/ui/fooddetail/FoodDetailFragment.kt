@@ -3,17 +3,13 @@ package com.mexator.petfoodinspector.ui.fooddetail
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
+import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.FragmentFoodDetailBinding
-import com.mexator.petfoodinspector.domain.data.DangerLevel
 import com.mexator.petfoodinspector.ui.data.FoodPictureDrawableFactory
-import com.mexator.petfoodinspector.ui.data.UIDangerLevel
 import com.mexator.petfoodinspector.ui.data.toUIDangerLevel
 import com.mexator.petfoodinspector.ui.foodlist.FoodListPageFragment
 import com.mexator.petfoodinspector.ui.getResources
@@ -29,6 +25,11 @@ class FoodDetailFragment : Fragment() {
     private var viewModelDisposable: Disposable? = null
 
     private val foodId: Int by lazy { arguments?.getInt(ARG_FOOD_KEY) ?: 0 }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +51,33 @@ class FoodDetailFragment : Fragment() {
                     onNext = this::applyViewState,
                     onError = { throwable -> Log.d(FoodListPageFragment.TAG, "", throwable) }
                 )
+    }
+
+    private var favorite: Boolean = false
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.food_detail_actionbar, menu)
+        menu.getItem(0).setIcon(R.drawable.ic_star_border_24)
+        super.onCreateOptionsMenu(menu, inflater)
+        // Todo change setting of this flag
+        favorite = false
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_fav -> {
+                favorite = if (favorite) {
+                    item.setIcon(R.drawable.ic_star_border_24);
+                    false;
+                } else {
+                    item.setIcon(R.drawable.ic_star_filled_24);
+                    true;
+                }
+                // Todo process update here
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {

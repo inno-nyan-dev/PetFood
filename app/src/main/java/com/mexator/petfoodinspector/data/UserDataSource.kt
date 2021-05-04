@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Single
  * provides capability to log in or register, and can retrieve user
  * profile information
  */
-interface UserRepository {
+interface UserDataSource {
     /**
      * Returns `true`, if user is logged in into app
      * If `true` is returned, subsequent call to [getSelfUser] should

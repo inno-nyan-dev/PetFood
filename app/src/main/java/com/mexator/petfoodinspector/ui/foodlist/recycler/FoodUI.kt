@@ -8,7 +8,7 @@ import com.mexator.petfoodinspector.ui.data.FoodPicture
 import com.mexator.petfoodinspector.ui.data.FoodPictureDrawableFactory
 import com.mexator.petfoodinspector.ui.data.UIDangerLevel
 import com.mexator.petfoodinspector.ui.getResources
-import com.mexator.petfoodinspector.ui.recycler.BaseViewHolder
+import com.mexator.petfoodinspector.ui.recycler.base.BaseViewHolder
 import com.mexator.petfoodinspector.ui.recycler.base.ViewTyped
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -19,18 +19,39 @@ data class FoodUI(
     val name: String,
     val pictureData: FoodPicture,
     val dangerLevel: UIDangerLevel,
+    val isFavorite: Boolean,
     override val uid: Int,
     override val viewType: Int = R.layout.item_food
 ) : ViewTyped
 
+/**
+ * Callback that invoked by [FoodViewHolder] when its view gets clicks
+ */
+interface FoodItemClickCallback {
+    /**
+     * Invoked when an item gets clicked
+     */
+    fun itemClicked(food: FoodUI)
+
+    /**
+     * Invoked when star checkbox on an item gets clicked
+     */
+    fun starClicked(food: FoodUI)
+}
+
+/**
+ * ViewHolder to display [FoodUI] item in RecyclerView
+ */
 class FoodViewHolder(
     private val binding: ItemFoodBinding,
-    private val clickCallback: (FoodUI) -> Unit
+    private val clickCallback: FoodItemClickCallback
 ) :
     BaseViewHolder<FoodUI>(binding.root) {
     override fun bind(item: FoodUI) {
-        binding.root.setOnClickListener { clickCallback(item) }
-
+        binding.root.setOnClickListener { clickCallback.itemClicked(item) }
+        binding.isFavorite.setOnClickListener {
+            clickCallback.starClicked(item)
+        }
         Single.defer {
             Single.just(
                 FoodPictureDrawableFactory().createDrawable(
@@ -45,6 +66,7 @@ class FoodViewHolder(
                 onSuccess = { binding.foodPicture.setImageDrawable(it) }
             )
 
+        binding.isFavorite.isChecked = item.isFavorite
         binding.foodName.text = item.name
         binding.dangerLevel.text = item.dangerLevel.levelString
         binding.dangerLevel.setTextColor(

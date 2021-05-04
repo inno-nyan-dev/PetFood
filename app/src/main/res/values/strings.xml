@@ -20,4 +20,9 @@
     <!-- EditText hints  -->
     <string name="enter_email_address">Enter email address</string>
     <string name="enter_password">Enter password</string>
+
+    <!-- Error handling  -->
+    <string name="action_retry">Retry</string>
+    
+    <string name="title_mark_fav">Mark as favorite</string>
 </resources>

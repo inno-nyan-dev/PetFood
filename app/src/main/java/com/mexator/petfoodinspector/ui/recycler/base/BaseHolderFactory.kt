@@ -6,9 +6,7 @@ package com.mexator.petfoodinspector.ui.recycler.base
 
 import android.content.res.Resources
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.mexator.petfoodinspector.ui.recycler.BaseViewHolder
 
 /**
  * This class is used by adapters to create ViewHolders for Recycler View
