@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'org.jetbrains.dokka'
+    id 'kotlin-kapt'
 }
 
 dokkaHtml {
@@ -93,6 +94,8 @@ dependencies {
     implementation "com.github.akarnokd:rxjava3-retrofit-adapter:$retrofit_rx_calladapter_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofit_serialization_converter_version"
 
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -1,6 +1,8 @@
 package com.mexator.petfoodinspector.data.network
 
+import android.app.Application
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.BuildConfig
 import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.User
@@ -14,21 +16,22 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import javax.inject.Inject
 
-object RemoteFavoritesDataSource : FavouriteFoodsDataSource {
-    private const val baseUrl = BuildConfig.API_URL
+class RemoteFavoritesDataSource() : FavouriteFoodsDataSource {
+    companion object {
+        private const val baseUrl = BuildConfig.API_URL
+    }
     private val petFoodAPI: PetFoodAPI
 
-    init {
-        val client = OkHttpClient.Builder()
-            .apply {
-                if (BuildConfig.DEBUG) addInterceptor(
-                    HttpLoggingInterceptor()
-                        .apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
-                )
-            }
-            .build()
+    @Inject
+    lateinit var client: OkHttpClient
 
+    init {
+        AppController.component.inject(this)
+    }
+
+    init {
         val contentType: MediaType = "application/json".toMediaType()
         val retrofit: Retrofit = Retrofit.Builder()
             .client(client)
