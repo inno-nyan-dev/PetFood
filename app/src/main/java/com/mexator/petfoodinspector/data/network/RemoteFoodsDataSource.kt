@@ -1,6 +1,5 @@
 package com.mexator.petfoodinspector.data.network
 
-import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.data.UserDataSource
 import com.mexator.petfoodinspector.data.network.dto.RemoteFoodItem
 import com.mexator.petfoodinspector.data.network.dto.UserAuthData
@@ -19,10 +18,8 @@ import javax.inject.Inject
  * Repository that is [FoodDataSource] and [UserDataSource]
  * and takes data from API
  */
-class RemoteFoodsDataSource @Inject constructor(private val petFoodAPI: PetFoodAPI) : FoodDataSource,
-    UserDataSource {
-
-    private var currentUser: User? = null
+class RemoteFoodsDataSource @Inject constructor(private val petFoodAPI: PetFoodAPI) :
+    FoodDataSource {
 
     override fun getFoodList(): Single<List<FoodItem>> =
         petFoodAPI.getProducts().map { list -> list.map { it.toFoodItem() } }
@@ -31,25 +28,6 @@ class RemoteFoodsDataSource @Inject constructor(private val petFoodAPI: PetFoodA
         petFoodAPI.getProducts()
             .map { list -> list.filter { it.id == id }[0] }
             .map { item: RemoteFoodItem -> FoodDetail(item.toFoodItem(), item.productDescription) }
-
-    override fun isUserLoggedIn(): Boolean = currentUser != null
-
-    override fun login(username: String, password: String): Completable =
-        petFoodAPI.logIn(UserAuthData(username, password))
-            .doOnSuccess { currentUser = it }
-            .ignoreElement()
-
-    override fun logout(): Completable {
-        currentUser = null
-        return Completable.complete()
-    }
-
-    override fun register(username: String, password: String): Single<User> =
-        petFoodAPI.signUp(UserAuthData(username, password))
-            .doOnSuccess { currentUser = it }
-
-    override fun getSelfUser(): Maybe<User> =
-        currentUser?.let { Maybe.just(it) } ?: Maybe.empty()
 
     private fun RemoteFoodItem.toFoodItem() =
         FoodItem(
