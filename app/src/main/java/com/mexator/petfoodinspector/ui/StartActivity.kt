@@ -14,6 +14,9 @@ import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.ActivityStartBinding
 import com.mexator.petfoodinspector.databinding.DrawerHeaderBinding
 
+/**
+ * Main activity of app. When app is launched, it opens
+ */
 class StartActivity : AppCompatActivity() {
     private val binding: ActivityStartBinding by lazy {
         ActivityStartBinding.inflate(layoutInflater)
@@ -29,12 +32,14 @@ class StartActivity : AppCompatActivity() {
     private val viewModel: DrawerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (BuildConfig.DEBUG) Log.d(TAG,"onCreate")
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         viewModel.viewState.subscribe(this::updateDrawer)
     }
 
     override fun onStart() {
+        if (BuildConfig.DEBUG) Log.d(TAG,"onStart")
         super.onStart()
         binding.navView.setupWithNavController(navController)
         NavigationUI.setupActionBarWithNavController(this, navController, binding.drawerLayout)

@@ -17,6 +17,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * ViewModel for FoodListScreen. Determines its logic
+ */
 class FoodListViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 

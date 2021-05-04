@@ -16,6 +16,9 @@ import com.mexator.petfoodinspector.ui.StartActivity
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 
+/**
+ * Screen at which user can log in into existing account
+ */
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var fieldsBinding: AuthFieldsBinding
@@ -63,6 +66,8 @@ class LoginFragment : Fragment() {
             is SuccessState -> {
                 binding.progress.visibility = View.INVISIBLE
                 val startActivityIntent = Intent(activity, StartActivity::class.java)
+                startActivityIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(startActivityIntent)
                 activity?.finish()
             }
