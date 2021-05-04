@@ -16,7 +16,7 @@ class AuthActivity : AppCompatActivity() {
         Navigation.findNavController(binding.fragmentContainer)
     }
 
-    private val repository: UserDataSource = RemoteFoodsDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

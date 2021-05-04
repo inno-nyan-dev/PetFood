@@ -22,7 +22,7 @@ class SignUpViewModel : ViewModel() {
     private val _viewState: BehaviorSubject<SignInViewState> = BehaviorSubject.create()
     val viewState: Observable<SignInViewState> = _viewState
 
-    private val repository: UserDataSource = RemoteFoodsDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource()
     private val compositeDisposable = CompositeDisposable()
 
     fun logIn(login: String, password: String) {

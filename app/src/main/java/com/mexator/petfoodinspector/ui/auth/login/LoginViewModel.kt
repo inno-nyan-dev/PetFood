@@ -20,7 +20,7 @@ class LoginViewModel : ViewModel() {
     private val _viewState: BehaviorSubject<LoginViewState> = BehaviorSubject.create()
     val viewState: Observable<LoginViewState> = _viewState
 
-    private val repository: UserDataSource = RemoteFoodsDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource()
     private val compositeDisposable = CompositeDisposable()
 
     fun logIn(login: String, password: String) {

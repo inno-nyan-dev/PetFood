@@ -16,7 +16,7 @@ data class DrawerState(
 )
 
 class DrawerViewModel : ViewModel() {
-    private val repository: UserDataSource = RemoteFoodsDataSource
+    private val repository: UserDataSource = RemoteFoodsDataSource()
     private val compositeDisposable = CompositeDisposable()
 
     private val _viewState: BehaviorSubject<DrawerState> = BehaviorSubject.create()

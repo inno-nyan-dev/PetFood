@@ -20,7 +20,7 @@ import java.util.*
 class FoodListViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     private val repository: FoodListRepository =
-        FoodListRepository(RemoteFoodsDataSource, RemoteFoodsDataSource, RemoteFavoritesDataSource())
+        FoodListRepository(RemoteFoodsDataSource(), RemoteFoodsDataSource(), RemoteFavoritesDataSource())
 
     private val searchQueries: BehaviorSubject<String> = BehaviorSubject.create()
     private val _viewState: BehaviorSubject<FoodListViewState> = BehaviorSubject.create()

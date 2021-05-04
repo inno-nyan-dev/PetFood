@@ -21,7 +21,7 @@ class FoodDetailViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val dataSource: FoodDataSource = RemoteFoodsDataSource
+    private val dataSource: FoodDataSource = RemoteFoodsDataSource()
 
     override fun onCleared() {
         super.onCleared()
