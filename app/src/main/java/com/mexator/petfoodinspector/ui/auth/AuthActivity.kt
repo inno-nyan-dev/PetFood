@@ -4,9 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.data.UserDataSource
-import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.databinding.ActivityAuthBinding
+import javax.inject.Inject
 
 class AuthActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -16,11 +17,13 @@ class AuthActivity : AppCompatActivity() {
         Navigation.findNavController(binding.fragmentContainer)
     }
 
-    private val repository: UserDataSource = RemoteFoodsDataSource()
+    @Inject
+    lateinit var repository: UserDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        AppController.component.inject(this)
     }
 
     override fun onStart() {

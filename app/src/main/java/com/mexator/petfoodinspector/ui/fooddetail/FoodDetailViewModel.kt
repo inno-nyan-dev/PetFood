@@ -1,7 +1,7 @@
 package com.mexator.petfoodinspector.ui.fooddetail
 
 import androidx.lifecycle.ViewModel
-import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.domain.data.FoodDetail
 import com.mexator.petfoodinspector.domain.datasource.FoodDataSource
 import io.reactivex.rxjava3.core.Observable
@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import javax.inject.Inject
 
 class FoodDetailViewModel : ViewModel() {
     data class FoodDetailViewState(
@@ -21,7 +22,12 @@ class FoodDetailViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val dataSource: FoodDataSource = RemoteFoodsDataSource()
+    @Inject
+    lateinit var repository: FoodDataSource
+
+    init {
+        AppController.component.inject(this)
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -29,7 +35,7 @@ class FoodDetailViewModel : ViewModel() {
     }
 
     private fun loadInitialContent() {
-        compositeDisposable += dataSource.getDetail(foodId)
+        compositeDisposable += repository.getDetail(foodId)
             .subscribeBy(
                 onSuccess = {
                     _viewState.onNext(

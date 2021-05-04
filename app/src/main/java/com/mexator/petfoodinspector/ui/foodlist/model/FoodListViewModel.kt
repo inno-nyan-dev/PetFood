@@ -2,8 +2,7 @@ package com.mexator.petfoodinspector.ui.foodlist.model
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.mexator.petfoodinspector.data.network.RemoteFavoritesDataSource
-import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.domain.FoodListRepository
 import com.mexator.petfoodinspector.domain.data.FoodID
 import com.mexator.petfoodinspector.domain.data.FoodItem
@@ -16,11 +15,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import java.util.*
+import javax.inject.Inject
 
 class FoodListViewModel : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
-    private val repository: FoodListRepository =
-        FoodListRepository(RemoteFoodsDataSource(), RemoteFoodsDataSource(), RemoteFavoritesDataSource())
+
+    @Inject
+    lateinit var repository: FoodListRepository
+
+    init {
+        AppController.component.inject(this)
+    }
 
     private val searchQueries: BehaviorSubject<String> = BehaviorSubject.create()
     private val _viewState: BehaviorSubject<FoodListViewState> = BehaviorSubject.create()

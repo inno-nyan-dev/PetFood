@@ -14,9 +14,15 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import javax.inject.Named
+import javax.inject.Singleton
 
+/**
+ * This class is responsible for creating of networking classes hierarchy: from OkHttpClient
+ * to Retrofit-generated API endpoints implementation
+ */
 @Module
 class NetworkModule {
+    @Singleton
     @Provides
     fun getOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -29,6 +35,7 @@ class NetworkModule {
             .build()
     }
 
+    @Singleton
     @Provides
     fun getJsonConverterFactory(): Converter.Factory {
         val contentType: MediaType = "application/json".toMediaType()
@@ -36,6 +43,7 @@ class NetworkModule {
     }
 
 
+    @Singleton
     @Provides
     @Named("FoodAPIRetrofit")
     fun getFoodAPIRetrofit(client: OkHttpClient, converterFactory: Converter.Factory): Retrofit =
@@ -47,8 +55,8 @@ class NetworkModule {
             .build()
 
     @Provides
+    @Singleton
     fun getFoodAPI(@Named("FoodAPIRetrofit") retrofit: Retrofit): PetFoodAPI =
-        retrofit
-            .create(PetFoodAPI::class.java)
+        retrofit.create(PetFoodAPI::class.java)
 
 }

@@ -2,9 +2,11 @@ package com.mexator.petfoodinspector.ui.auth.signup
 
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
+import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.data.UserDataSource
 import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.data.network.dto.errorMessage
+import com.mexator.petfoodinspector.domain.FoodListRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -12,6 +14,7 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import retrofit2.HttpException
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 sealed class SignInViewState
 object ProgressState : SignInViewState()
@@ -22,7 +25,13 @@ class SignUpViewModel : ViewModel() {
     private val _viewState: BehaviorSubject<SignInViewState> = BehaviorSubject.create()
     val viewState: Observable<SignInViewState> = _viewState
 
-    private val repository: UserDataSource = RemoteFoodsDataSource()
+    @Inject
+    lateinit var repository: UserDataSource
+
+    init {
+        AppController.component.inject(this)
+    }
+
     private val compositeDisposable = CompositeDisposable()
 
     fun logIn(login: String, password: String) {
