@@ -67,7 +67,7 @@ class StartActivity : AppCompatActivity() {
         val loginItem = binding.navView.menu.findItem(R.id.authActivity)
 
         if (state.user != null) {
-            drawerHeaderBinding.usernameView.text = "Not implemented yet"
+            drawerHeaderBinding.usernameView.text = ""
             drawerHeaderBinding.emailView.visibility = View.VISIBLE
             drawerHeaderBinding.emailView.text = state.user.email
 
