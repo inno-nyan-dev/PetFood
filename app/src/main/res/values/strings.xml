@@ -23,6 +23,7 @@
 
     <!-- Error handling  -->
     <string name="action_retry">Retry</string>
-    
+    <string name="dialog_error_title">Error</string>
+
     <string name="title_mark_fav">Mark as favorite</string>
 </resources>

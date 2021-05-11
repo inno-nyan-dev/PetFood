@@ -1,5 +1,6 @@
 package com.mexator.petfoodinspector.ui.foodlist
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.mexator.petfoodinspector.BuildConfig
 import com.mexator.petfoodinspector.R
 import com.mexator.petfoodinspector.databinding.FragmentPageFoodlistBinding
@@ -69,7 +69,7 @@ class FoodListPageFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (BuildConfig.DEBUG) Log.d(TAG,"onViewCreated")
+        if (BuildConfig.DEBUG) Log.d(TAG, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.foodRecycler.adapter = adapter
         binding.foodRecycler.addItemDecoration(SpaceDecorator(requireContext().dpToPx(8)))
@@ -88,12 +88,17 @@ class FoodListPageFragment : Fragment() {
             override fun onStart() {
                 request(1)
             }
+
             override fun onNext(t: FoodListViewState) {
                 applyViewState(t).subscribe {
                     request(1)
                 }
             }
-            override fun onError(t: Throwable?) { Log.e(TAG,"",t) }
+
+            override fun onError(t: Throwable?) {
+                Log.e(TAG, "", t)
+            }
+
             override fun onComplete() {}
         }
 
@@ -112,12 +117,12 @@ class FoodListPageFragment : Fragment() {
                 .subscribeBy(
                     onNext = { event ->
                         when (event) {
-                            is TempEvent.FavError -> Snackbar.make(
-                                requireContext(),
-                                binding.root,
-                                event.message,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                            is TempEvent.FavError -> AlertDialog.Builder(context)
+                                .setTitle(R.string.dialog_error_title)
+                                .setMessage(event.message)
+                                .setPositiveButton("OK") { dialogInterface, _ -> dialogInterface.dismiss() }
+                                .create()
+                                .show()
                         }
                     }
                 )
@@ -128,16 +133,10 @@ class FoodListPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         compositeDisposable.clear()
+        dialog?.dismiss()
     }
 
-    private val errorSnackBar: Snackbar by lazy {
-        Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE).apply {
-            setAction(R.string.action_retry) {
-                viewModel.onAttachView()
-                this.dismiss()
-            }
-        }
-    }
+    private var dialog: AlertDialog? = null
 
     private fun applyViewState(state: FoodListViewState): Completable {
         if (BuildConfig.DEBUG) Log.d(TAG, state.toString())
@@ -155,10 +154,17 @@ class FoodListPageFragment : Fragment() {
         adapter.differ.submitList(newList) { renderFinished.onComplete() }
 
         if (state.error != null && !state.progress) {
-            errorSnackBar.setText(state.error)
-            errorSnackBar.show()
+            dialog = AlertDialog.Builder(context)
+                .setTitle(R.string.dialog_error_title)
+                .setMessage(state.error)
+                .setPositiveButton(R.string.action_retry) { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    viewModel.onAttachView()
+                }
+                .create()
+            dialog?.show()
         } else {
-            errorSnackBar.dismiss()
+            dialog?.dismiss()
         }
 
         return renderFinished
@@ -176,7 +182,7 @@ class FoodListPageFragment : Fragment() {
 
     private fun onFoodClicked(food: FoodUI) {
         val navController = findNavController()
-        val args: Bundle = Bundle()
+        val args = Bundle()
         args.putInt(FoodDetailFragment.ARG_FOOD_KEY, food.uid)
         navController.navigate(R.id.action_foodSearchFragment_to_foodDetailFragment, args)
     }
