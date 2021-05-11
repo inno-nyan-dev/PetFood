@@ -32,4 +32,7 @@ class RemoteUserDataSource @Inject constructor(private val petFoodAPI: PetFoodAP
     override fun getSelfUser(): Maybe<User> =
         currentUser?.let { Maybe.just(it) } ?: Maybe.empty()
 
+    companion object {
+        private const val TAG = "RemoteUserDataSource"
+    }
 }
