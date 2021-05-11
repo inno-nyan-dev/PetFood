@@ -24,6 +24,6 @@ jobs:
       if: ${{github.ref == 'refs/heads/master'}}
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      BRANCH: gh-pages
-      FOLDER: app/build/dokka/html
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: app/build/dokka/html
