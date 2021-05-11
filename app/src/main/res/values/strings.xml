@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">PetFoodInspector</string>
+    <string name="app_name">Rabbit Nutrition Handbook</string>
 
     <string name="password_placeholder">Password: %1$s</string>
     <string name="login_placeholder">Login: %1$s</string>
 
     <!--  Drawer labels  -->
     <string name="header_text_no_user">Data not synchronised</string>
-    <string name="login_title">Login</string>
+    <string name="login_title">Log in</string>
     <string name="logout_title">Logout</string>
     <string name="search_foods_dest">Search for foods</string>
 
@@ -23,6 +23,7 @@
 
     <!-- Error handling  -->
     <string name="action_retry">Retry</string>
-    
+    <string name="dialog_error_title">Error</string>
+
     <string name="title_mark_fav">Mark as favorite</string>
 </resources>

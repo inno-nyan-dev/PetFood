@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -86,6 +87,7 @@ class FoodDetailFragment : Fragment() {
     }
 
     private fun applyViewState(state: FoodDetailViewModel.FoodDetailViewState) {
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = state.foodDetail.foodItem.name
         binding.foodDetailText.text = state.foodDetail.detailText
         state.foodDetail.foodItem.let { item ->
             Single.defer {

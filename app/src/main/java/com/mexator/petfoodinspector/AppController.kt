@@ -18,7 +18,6 @@ class AppController : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        LocalDataSource.provideAppContext(applicationContext)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         component = buildComponent()

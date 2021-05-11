@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/foodSearchFragment"
         android:name="com.mexator.petfoodinspector.ui.foodsearch.FoodSearchFragment"
-        android:label="FoodSearchFragment">
+        android:label="Search Products">
         <action
             android:id="@+id/action_foodSearchFragment_to_foodDetailFragment"
             app:destination="@id/foodDetailFragment" />
@@ -15,8 +15,7 @@
 
     <fragment
         android:id="@+id/foodDetailFragment"
-        android:name="com.mexator.petfoodinspector.ui.fooddetail.FoodDetailFragment"
-        android:label="FoodDetailFragment">
+        android:name="com.mexator.petfoodinspector.ui.fooddetail.FoodDetailFragment">
 
         <argument
             android:name="foodId"
