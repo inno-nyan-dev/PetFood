@@ -13,6 +13,7 @@ dokkaHtml {
             noStdlibLink.set(false)
             noJdkLink.set(false)
             noAndroidSdkLink.set(false)
+            includes.from("src/main/package-doc.md")
         }
     }
 }
