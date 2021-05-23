@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:text="TODO name"
+        tools:text="TODO name"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="normal" />
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:text="a.b@c.com" />
+        tools:text="a.b@c.com" />
 
     <View
         android:layout_width="match_parent"

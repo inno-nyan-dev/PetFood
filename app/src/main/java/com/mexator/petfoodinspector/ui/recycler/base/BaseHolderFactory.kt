@@ -31,7 +31,7 @@ abstract class BaseHolderFactory {
      *
      * @throws
      */
-    final fun create(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> {
+    fun create(parent: ViewGroup, viewType: Int): BaseViewHolder<ViewTyped> {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return checkNotNull(createViewHolder(view as ViewGroup, viewType)) {
             val type = try {

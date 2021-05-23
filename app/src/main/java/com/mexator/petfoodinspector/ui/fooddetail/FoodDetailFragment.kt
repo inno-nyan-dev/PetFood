@@ -68,11 +68,11 @@ class FoodDetailFragment : Fragment() {
         return when (item.itemId) {
             R.id.action_fav -> {
                 favorite = if (favorite) {
-                    item.setIcon(R.drawable.ic_star_border_24);
-                    false;
+                    item.setIcon(R.drawable.ic_star_border_24)
+                    false
                 } else {
-                    item.setIcon(R.drawable.ic_star_filled_24);
-                    true;
+                    item.setIcon(R.drawable.ic_star_filled_24)
+                    true
                 }
                 // Todo process update here
                 true
@@ -114,6 +114,7 @@ class FoodDetailFragment : Fragment() {
     }
 
     companion object {
+        @Suppress("unused")
         const val TAG = "FoodDetailFragment"
         const val ARG_FOOD_KEY = "foodId"
     }

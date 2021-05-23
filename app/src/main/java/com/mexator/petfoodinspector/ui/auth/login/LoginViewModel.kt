@@ -54,6 +54,7 @@ class LoginViewModel : ViewModel() {
     }
 
     companion object {
+        @Suppress("unused")
         private const val TAG = "LoginViewModel"
     }
 }

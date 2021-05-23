@@ -4,9 +4,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import com.mexator.petfoodinspector.AppController
 import com.mexator.petfoodinspector.data.UserDataSource
-import com.mexator.petfoodinspector.data.network.RemoteFoodsDataSource
 import com.mexator.petfoodinspector.data.network.dto.errorMessage
-import com.mexator.petfoodinspector.domain.FoodListRepository
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -79,6 +77,7 @@ class SignUpViewModel : ViewModel() {
     companion object {
         private const val PASSWORD_PATTERN =
             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^*&+=])(?=\\S+$).{4,}$"
+        @Suppress("unused")
         private const val TAG = "SignUpViewModel"
     }
 }

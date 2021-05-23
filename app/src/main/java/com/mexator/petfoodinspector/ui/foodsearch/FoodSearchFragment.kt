@@ -37,7 +37,7 @@ class FoodSearchFragment : Fragment() {
      */
     val searchObservable: Observable<String> = searchSubject
         .map(String::trim)
-        .map(String::toLowerCase)
+        .map(String::lowercase)
         .debounce(400, TimeUnit.MILLISECONDS)
 
     private val onQueryTextListener = object : SearchView.OnQueryTextListener {

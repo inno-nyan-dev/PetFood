@@ -2,7 +2,6 @@ package com.mexator.petfoodinspector
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.mexator.petfoodinspector.data.local.LocalDataSource
 import com.mexator.petfoodinspector.di.AppComponent
 import com.mexator.petfoodinspector.di.DaggerAppComponent
 import com.mexator.petfoodinspector.di.NetworkModule

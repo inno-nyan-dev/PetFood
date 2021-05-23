@@ -3,7 +3,7 @@ package com.mexator.petfoodinspector.domain.data
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable()
+@Serializable
 enum class DangerLevel {
     @SerialName("safe")
     SAFE,

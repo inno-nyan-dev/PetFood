@@ -14,13 +14,6 @@ enum class UIDangerLevel(
     Safe("Safe", R.color.green_300, R.color.black),
 }
 
-fun UIDangerLevel.toDangerLevel(): DangerLevel =
-    when (this) {
-        UIDangerLevel.Safe -> DangerLevel.SAFE
-        UIDangerLevel.Danger -> DangerLevel.PROHIBITED
-        UIDangerLevel.Careful -> DangerLevel.WITH_CARE
-    }
-
 fun DangerLevel.toUIDangerLevel(): UIDangerLevel =
     when (this) {
         DangerLevel.SAFE -> UIDangerLevel.Safe

@@ -33,6 +33,7 @@ class RemoteUserDataSource @Inject constructor(private val petFoodAPI: PetFoodAP
         currentUser?.let { Maybe.just(it) } ?: Maybe.empty()
 
     companion object {
+        @Suppress("unused")
         private const val TAG = "RemoteUserDataSource"
     }
 }

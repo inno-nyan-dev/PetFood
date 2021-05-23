@@ -9,6 +9,3 @@ fun ViewBinding.getResources(): Resources = root.resources
 
 @Px
 fun Context.dpToPx(dp: Int): Float = resources.displayMetrics.density * dp
-
-@Px
-fun Context.spToPx(dp: Int): Float = resources.displayMetrics.scaledDensity * dp

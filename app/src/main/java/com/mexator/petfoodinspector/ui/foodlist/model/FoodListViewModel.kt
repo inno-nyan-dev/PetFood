@@ -109,7 +109,7 @@ class FoodListViewModel : ViewModel() {
     }
 
     private fun satisfiesQuery(food: FoodItem, query: String): Boolean =
-        food.name.toLowerCase(Locale.getDefault()).contains(query)
+        food.name.lowercase(Locale.getDefault()).contains(query)
 
     private fun <T> BehaviorSubject<T>.mapValue(mapper: (T) -> T) =
         onNext(mapper(value ?: error("Subject has no value!")))
