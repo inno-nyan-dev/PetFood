@@ -1,11 +1,11 @@
+# Final report
+Report is available at https://drive.google.com/file/d/1ttXd5R3F8LpRK9cwxm1mMzUIEC2UakD-/view?usp=sharing
+
 #  Rabbit Nutrition Handbook
 
 ![build](https://github.com/inno-nyan-dev/PetFood/actions/workflows/android_build.yml/badge.svg)
 [![docs](https://github.com/inno-nyan-dev/PetFood/actions/workflows/build_docs.yml/badge.svg)](https://inno-nyan-dev.github.io/PetFood)
 ![test](https://github.com/inno-nyan-dev/PetFood/actions/workflows/android_test.yml/badge.svg)
-
-# Final report
-Report is available at https://drive.google.com/file/d/1ttXd5R3F8LpRK9cwxm1mMzUIEC2UakD-/view?usp=sharing
 
 **Rabbit Nutrition Handbook** is a mobile application that helps its users to properly feed their pet rabbits. Current version of the application allows users to determine in what extend the food is dangerous for rabbits, in which quantities we can give it to them and when. The most approptiate application type is mobile application, Android especcially, since the phone is always with us and we can get info about food everywere with internet connection.
 
@@ -32,6 +32,7 @@ Application consist of 2 main parts: Android app itself and the server to store 
 
 ## Useful links 
 
+- [Server Repository](https://github.com/inno-nyan-dev/Server)
 - [Project backlog](https://github.com/orgs/inno-nyan-dev/projects/1)
 - [Android app documentation](https://inno-nyan-dev.github.io/PetFood/)
 - [Screen design - products list](https://www.justinmind.com/usernote/tests/51948828/51952214/51952216/index.html#/screens/5e9a1d73-e5ba-4404-ac76-a6ec5c08827e)
