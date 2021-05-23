@@ -9,6 +9,15 @@
 # Installation
 Check out **Releases** page of the repository to latest available version of the app. There you can see `.apk` file, which is an installable executable. 
 
+# Usage
+Current version of app allows users to search for various products. When app is opened, user will see list of foods, together with their danger level. At the top 
+of screen, there is a search bar, which allows to filter foods.
+
+To see more information about particular product, one can tap its car in the list and then detail screen will be opened.
+
+There is also a side navigation panel, that is opened with slide from left. There user can visit login
+and signup pages to create an account. When logged in, user can mark foods as favorite by pressing star icon at food.
+
 # Team members
 - Anton Brisilin (BS18-SB)
 - Grigoriy Dolgov (BS18-SE)
